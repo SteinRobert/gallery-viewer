@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>index</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Robert Stein" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<style>
+			html, body, p, table, div {
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+
+			.image {
+				margin: 10px;
+			}
+
+			span.rollover_w {
+				opacity: 1;
+				-o-transition-duration: 1s;
+				-moz-transition-duration: 1s;
+				-webkit-transition: -webkit-transform 1s;
+				background: center center no-repeat #FFF;
+				cursor: pointer;
+				height: 160px;
+				width: 240px;
+				position: absolute;
+				z-index: 10;
+				opacity: 0;
+				-webkit-transition: opacity 0.25s ease;
+			}
+
+			span.cat {
+				opacity: 1;
+				-o-transition-duration: 1s;
+				-moz-transition-duration: 1s;
+				-webkit-transition: -webkit-transform 1s;
+				background: center center no-repeat #FFF;
+				cursor: pointer;
+				height: 160px;
+				width: 240px;
+				position: absolute;
+				z-index: 10;
+				opacity: 1;
+			}
+
+			span.rollover_h {
+				opacity: 1;
+				-o-transition-duration: .25s;
+				-moz-transition-duration: .25s;
+				-webkit-transition: -webkit-transform .25s;
+				background: center center no-repeat #FFF;
+				cursor: pointer;
+				height: 361px;
+				width: 240px;
+				position: absolute;
+				z-index: 10;
+				opacity: 0;
+				-webkit-transition: opacity 0.25s ease-in;
+			}
+
+			span.rollover_h:hover, span.rollover_w:hover {
+				opacity: .89;
+				-o-transition-duration: .25s;
+				-moz-transition-duration: .25s;
+				-webkit-transition: -webkit-transform .25s;
+				-webkit-box-shadow: 0px 0px 0px #000;
+				-moz-box-shadow: 0px 0px 0px #000;
+				box-shadow: 0px 0px 0px #000;
+				-webkit-transition: opacity .25s ease-in;
+			}
+
+			#back {
+				-o-transition-duration: .25s;
+				-moz-transition-duration: .25s;
+				-webkit-transition: -webkit-transform .25s;
+				width: 50px;
+				height: 50px;
+				-webkit-border-radius: 25px;
+				-moz-border-radius: 25px;
+				background-color: #000;
+				border-radius: 25px;
+				position: absolute;
+				top: 50px;
+				right: 80px;
+				border: 1px solid #000;
+				opacity: 0;
+				-webkit-transition: opacity .25s ease-in;
+			}
+			#back:hover {
+				-o-transition-duration: .25s;
+				-moz-transition-duration: .25s;
+				-webkit-transition: -webkit-transform .25s;
+				opacity: 0.7;
+				-webkit-transition: opacity .25s ease-in;
+			}
+
+			#line {
+				-moz-transform: rotate(45deg);
+				-o-transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+				-ms-transform: rotate(45deg);
+				transform: rotate(45deg);
+				filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',
+				M11=0.9914448613738104, M12=-0.13052619222005157,M21=0.13052619222005157, M22=0.9914448613738104);
+				-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.9914448613738104, M12=-0.13052619222005157, M21=0.13052619222005157, M22=0.9914448613738104,sizingMethod='auto expand')";
+				zoom: 1;
+				opacity: 1;
+			}
+
+			#line2 {
+				-moz-transform: rotate(135deg);
+				-o-transform: rotate(135deg);
+				-webkit-transform: rotate(135deg);
+				-ms-transform: rotate(135deg);
+				transform: rotate(135deg);
+				filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',
+				M11=0.9914448613738104, M12=-0.13052619222005157,M21=0.13052619222005157, M22=0.9914448613738104);
+				-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.9914448613738104, M12=-0.13052619222005157, M21=0.13052619222005157, M22=0.9914448613738104,sizingMethod='auto expand')";
+				zoom: 1;
+				opacity: 1;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div style="width:100%;" id="masterwrapper">
+			<div style="position: relative; width: 100%; float:left;" id="wrapper">
+
+			</div>
+
+		</div>
+		<script>
+			var dict = [];
+
+			var rightwrapper = $(document.createElement('div'));
+			var back_button = $(document.createElement('div'));
+			var left_line = $(document.createElement('div'));
+			var right_line = $(document.createElement('div'));
+			rightwrapper.attr({
+				id : 'rightwrapper',
+			});
+			rightwrapper.css('width', '50%');
+			rightwrapper.css('float', 'right');
+			rightwrapper.css('text-align', 'center');
+
+			back_button.attr({
+				id : 'back',
+			});
+
+			back_button.append(left_line);
+			back_button.append(right_line);
+
+			left_line.attr({
+				style : 'border-top: 3px solid #FFF; opacity: 1; margin-top: 20px; height: 30px; width: 30px;',
+				class : 'line',
+				id : 'line',
+			});
+
+			right_line.attr({
+				style : 'border-top: 3px solid #FFF; opacity: 1; margin-top: -54px; height: 30px; width: 30px;',
+				class : 'line2',
+				id : 'line2',
+
+			});
+
+			var img1 = {
+				path_thumb : "img/DSC_0093_01.png",
+				path : "img/DSC_0093_01_big.png",
+				height : 361,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+			var img2 = {
+				path_thumb : "img/DSC_0048.png",
+				path : "img/DSC_0048_big.png",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+			var img3 = {
+				path_thumb : "img/notbusiness1.jpg",
+				path : "img/notbusiness1_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img4 = {
+				path_thumb : "img/DSC_0301.png",
+				path : "img/DSC_0301_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img5 = {
+				path_thumb : "img/DSC_0139.png",
+				path : "img/DSC_0139_big.png",
+				height : 361,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img6 = {
+				path_thumb : "img/DSC_0254.png",
+				path : "img/DSC_0254_big.png",
+				height : 361,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img7 = {
+				path_thumb : "img/DSC_0125.jpg",
+				path : "img/DSC_0125_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img8 = {
+				path_thumb : "img/DSC_0163.jpg",
+				path : "img/DSC_0163_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img9 = {
+				path_thumb : "img/DSC_0221.jpg",
+				path : "img/DSC_0221_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			var img10 = {
+				path_thumb : "img/DSC_0221.jpg",
+				path : "img/DSC_0221_big.jpg",
+				height : 160,
+				width : 240,
+				title : "SCHILLE PHOTOGRAPHY",
+				model : "roddirockz",
+			};
+
+			dict.push(img1);
+			dict.push(img2);
+			dict.push(img3);
+			dict.push(img4);
+			dict.push(img9);
+
+			dict.push(img8);
+			dict.push(img6);
+			dict.push(img7);
+			dict.push(img5);
+			dict.push(img10);
+			dict.push(img10);
+			dict.push(img10);
+
+			var cols = 4;
+
+			printCategory();
+
+			function printCategory() {
+
+				var pos = []
+				for (var o = 0; o < cols; o++) {
+					pos[o] = 20;
+				}
+
+				//start tile
+				var m = $(document.createElement('div'));
+				m.attr({
+					class : "image",
+					style : "position: absolute; top:" + pos[0] + "px;left:50%; margin-left:" + (-(124 * cols) + 0) + "px; background-color: #555; width: 240px; height: 160px;",
+				});
+				var k = $(document.createElement('span'));
+				k.attr({
+					class : "cat",
+					style : "display: inline-block; text-align: center; background-color: #555;",
+				});
+				var n = $(document.createElement('span'));
+				n.attr({
+					style : "font-family: Arial, Helvetica, sans-serif;color: #CCC;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: #CCC; padding: 5px; text-align: center; display: inline-block;",
+				});
+
+				m.append(k);
+
+				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>SCHILLE CATEGORY</h2><p style='color: #CCC'>UNDERTITLE </p>")
+				k.append(n);
+
+				$("#wrapper").append(m);
+				pos[0] = pos[0] + 160 + 10;
+
+				var next = 0;
+				jQuery.each(dict, function(i, val) {
+					//for (var i = 0; i < dict.length; i++) {
+
+					var m = $(document.createElement('div'));
+					m.attr({
+						class : "image",
+						id : "img" + i,
+						style : "position: absolute; top:" + pos[next % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (next % cols) * 250) + "px;",
+					});
+					var k = $(document.createElement('span'));
+					if (val.height == 160) {
+						k.attr({
+							class : "rollover_w",
+							style : "display: inline-block; text-align: center;",
+						});
+						var n = $(document.createElement('span'));
+						n.attr({
+							style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
+						});
+
+					} else {
+						k.attr({
+							class : "rollover_h",
+							style : "display: inline-block; text-align: center;",
+						});
+						var n = $(document.createElement('span'));
+						n.attr({
+							style : "font-family: Arial, Helvetica, sans-serif;  position: relative;  top: 40%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
+						});
+					}
+
+					m.click(function move() {
+						rightwrapper.append(back_button);
+
+						$(back_button).click(function() {
+
+							$(back_button).animate({
+								opacity : 0,
+
+							}, 500, function() {
+								$(back_button).css('display', 'none');
+							});
+
+							$("#masterwrapper").animate({
+								marginLeft : "0px",
+							}, 2000, function() {
+								$("#masterwrapper").css('width', "100%");
+								$("#wrapper").css('width', "100%");
+								$(rightwrapper).remove();
+								$(rightwrapper).empty();
+
+							});
+						});
+
+						$(back_button).mouseenter(function() {
+							$(back_button).animate({
+								opacity : 0.7,
+
+							}, 0, function() {
+
+							});
+						});
+
+						$(back_button).mouseleave(function() {
+							$(back_button).animate({
+								opacity : 0.2,
+
+							}, 0, function() {
+
+							});
+						});
+
+						$('#masterwrapper').css('width', '200%');
+						$('#wrapper').css('width', '50%');
+						$('#masterwrapper').append(rightwrapper);
+						var img = $(document.createElement('img'));
+						img.attr({
+							src : val.path,
+							class : "bild",
+							id : "bigpicture",
+							width : $(window).width(),
+
+							style : "display: inline",
+						});
+
+						$(rightwrapper).append(img);
+
+						$(img).one('load', function() {
+							$("#masterwrapper").animate({
+								marginLeft : "-" + $(window).width(),
+							}, 2000, function() {
+								$(back_button).css('display', 'block');
+								$(back_button).css('opacity', '0');
+								$(back_button).animate({
+									opacity : 0.2,
+
+								}, 500, function() {
+
+								});
+							});
+						}).each(function() {
+							if (this.complete)
+								$(this).load();
+						});
+
+					});
+
+					pos[next % cols] = pos[next % cols] + dict[i].height + 10;
+					m.append(k);
+
+					n.html("<h2 style='border: 1px solid #555; padding: 8px; color: #555; font-size: 14px; line-height: 18px;'>" + val.title + "</h2><p style='color: #555'>Model: " + val.model + "</p>")
+					k.append(n);
+
+					var img = $(document.createElement('img'));
+					img.attr({
+						src : dict[i].path_thumb,
+						height : dict[i].height,
+						width : dict[i].width,
+						class : "bild",
+						style : "display: inline",
+					});
+
+					m.append(img);
+					$("#wrapper").append(m);
+
+					next = next_Row(pos);
+
+				});
+				var lowest = lowestCol(pos);
+
+				for (var i = 0; i < pos.length; i++) {
+					if (pos[i] != pos[lowest]) {
+						var m = $(document.createElement('div'));
+						m.attr({
+							class : "image",
+							style : "position: absolute; top:" + pos[i % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
+						});
+						$("#wrapper").append(m);
+					}
+				}
+
+			}
+
+			function next_Row(pos) {
+				var ele = 0;
+				for (var temp = 0; temp < pos.length; temp++) {
+					if (pos[ele] > pos[temp]) {
+						ele = temp;
+					}
+				}
+				console.log("next row is:" + ele);
+				return ele;
+			}
+
+			function lowestCol(pos) {
+				var ele = 0;
+				var list = [];
+				for (var temp = 0; temp < pos.length; temp++) {
+					if (pos[ele] < pos[temp]) {
+						ele = temp;
+					}
+				}
+				console.log("lowest is:" + ele);
+				return ele;
+			}
+
+		</script>
+
+	</body>
+</html>
