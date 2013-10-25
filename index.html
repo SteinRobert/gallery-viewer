@@ -287,23 +287,30 @@
 				model : "roddirockz",
 			};
 
-			dict.push(img1);
-			dict.push(img2);
-			dict.push(img3);
-			dict.push(img4);
-			dict.push(img9);
+			// dict.push(img1);
+			// dict.push(img2);
+			// dict.push(img3);
+			// dict.push(img4);
+			// dict.push(img9);
 
-			dict.push(img8);
-			dict.push(img6);
-			dict.push(img7);
-			dict.push(img5);
-			dict.push(img10);
-			dict.push(img10);
-			dict.push(img10);
+			// dict.push(img8);
+			// dict.push(img6);
+			// dict.push(img7);
+			// dict.push(img5);
+			// dict.push(img10);
+			// dict.push(img10);
+			// dict.push(img10);
 
 			var cols = 4;
 
-			printCategory();
+						console.log('bla');
+			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
+					for(var key in msg){
+						dict.push(msg[key]);	
+					}
+					printCategory();
+				
+			});
 
 			function printCategory() {
 

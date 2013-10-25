@@ -11,7 +11,7 @@ function get_username(){
 } 
 
 function get_password(){
-	return "password";
+	return "passw0rd";
 }
 
 
@@ -38,10 +38,11 @@ function api_post() {
 }
 
 function to_json($my_result) {
-	echo('{');
+	$result = '';
 	foreach ($my_result as $key => $value)
-		echo($key . ':' . $value);
-	echo('}');
+		$result=$result.'"'.$key . '" :' . $value.',';
+	$result=rtrim($result, ',');
+	echo('{'.$result.'}');
 }
 
 function is_auth() {
@@ -66,13 +67,13 @@ function write_descriptor($height, $width){
 	}
 	$category = rtrim($category, ",");
 	echo($category);
-	$stringdata = '{ path_thumb: "'.$path_thumb.
-	'" , path: "'. $path.
-	 '", title: "'.$title.
-	 '", model: "'.$description.
-	 '", height: "'.$height.
-	 '", width: "'.$width.
-	 '", category: ['.$category.']'.
+	$stringdata = '{ "path_thumb": "'.$path_thumb.
+	'" , "path": "'. $path.
+	 '", "title": "'.$title.
+	 '", "model": "'.$description.
+	 '", "height": "'.$height.
+	 '", "width": "'.$width.
+	 '", "category": ['.$category.']'.
 	 '}';
 	$file = fopen('etc/'.$title.'.json', 'w');
 	fwrite($file, $stringdata);
