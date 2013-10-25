@@ -359,16 +359,16 @@
 
 						$(back_button).click(function() {
 
-							$(back_button).animate({
+							$(back_button).add(prev_button).add(next_button).animate({
 								opacity : 0,
 
 							}, 500, function() {
-								$(back_button).css('display', 'none');
+								$(this).css('display', 'none');
 							});
 
 							$("#masterwrapper").animate({
 								marginLeft : "0px",
-							}, 2000, function() {
+							}, 500, function() {
 								$("#masterwrapper").css('width', "100%");
 								$("#wrapper").css('width', "100%");
 								$(rightwrapper).remove();
@@ -404,40 +404,41 @@
 							class : "bild",
 							id : "bigpicture",
 							width : $(window).width(),
-
-							style : "display: inline",
+							style : "display: none;",
 						});
+						
+						var img2 = $(document.createElement('img'));
+						img2.attr({
+							src : val.path_thumb,
+							class : "bild",
+							id : "bigpicture",
+							width : $(window).width(),
 
+							style : "display: inline-block;",
+						});
+						
+						$(rightwrapper).append(img2);
 						$(rightwrapper).append(img);
 
 						$(img).one('load', function() {
 							$("#masterwrapper").animate({
 								marginLeft : "-" + $(window).width(),
-							}, 2000, function() {
-								$(back_button).css('display', 'block');
-								$(back_button).css('opacity', '0');
-
-								$(next_button).animate({
+							}, 500, function() {
+								$(back_button).add(prev_button).add(next_button).css('display', 'block');
+								$(back_button).add(prev_button).add(next_button).css('opacity', '0');
+								
+								$(back_button).add(prev_button).add(next_button).animate({
 									opacity : 0.2,
 
 								}, 500, function() {
 
 								});
-
-								$(prev_button).animate({
-									opacity : 0.2,
-
-								}, 500, function() {
-
-								});
-
-								$(back_button).animate({
-									opacity : 0.2,
-
-								}, 500, function() {
-
-								});
-							});
+								$(img2).css('display','none');
+								$(img).css('display', 'inline-block');
+							}
+							
+							
+							);
 						}).each(function() {
 							if (this.complete)
 								$(this).load();
@@ -454,8 +455,8 @@
 					n.html("<h2 style='border: 1px solid #555; padding: 8px; color: #555; font-size: 14px; line-height: 18px;'>" + val.title + "</h2><p style='color: #555'>Model: " + val.model + "</p>")
 					k.append(n);
 
-					var img = $(document.createElement('img'));
-					img.attr({
+					var img_thumb = $(document.createElement('img'));
+					img_thumb.attr({
 						src : dict[i].path_thumb,
 						height : dict[i].height,
 						width : dict[i].width,
@@ -463,7 +464,7 @@
 						style : "display: inline",
 					});
 
-					m.append(img);
+					m.append(img_thumb);
 					$("#wrapper").append(m);
 
 					next = next_Row(pos);
