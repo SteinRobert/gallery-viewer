@@ -33,7 +33,7 @@
 				-webkit-transition: -webkit-transform 1s;
 				background: center center no-repeat #FFF;
 				cursor: pointer;
-				height: 160px;
+				
 				width: 240px;
 				position: absolute;
 				z-index: 10;
@@ -53,21 +53,6 @@
 				position: absolute;
 				z-index: 10;
 				opacity: 1;
-			}
-
-			span.rollover_h {
-				opacity: 1;
-				-o-transition-duration: .25s;
-				-moz-transition-duration: .25s;
-				-webkit-transition: -webkit-transform .25s;
-				background: center center no-repeat #FFF;
-				cursor: pointer;
-				height: 361px;
-				width: 240px;
-				position: absolute;
-				z-index: 10;
-				opacity: 0;
-				-webkit-transition: opacity 0.25s ease-in;
 			}
 
 			span.rollover_h:hover, span.rollover_w:hover {
@@ -345,6 +330,7 @@
 
 				var next = 0;
 				jQuery.each(dict, function(i, val) {
+					console.log(val);
 					//for (var i = 0; i < dict.length; i++) {
 
 					var m = $(document.createElement('div'));
@@ -354,26 +340,17 @@
 						style : "position: absolute; top:" + pos[next % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (next % cols) * 250) + "px;",
 					});
 					var k = $(document.createElement('span'));
-					if (val.height == 160) {
+					
 						k.attr({
 							class : "rollover_w",
-							style : "display: inline-block; text-align: center;",
+							style : "display: inline-block; text-align: center; height:"+val.height+"px;",
 						});
 						var n = $(document.createElement('span'));
 						n.attr({
 							style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
 						});
 
-					} else {
-						k.attr({
-							class : "rollover_h",
-							style : "display: inline-block; text-align: center;",
-						});
-						var n = $(document.createElement('span'));
-						n.attr({
-							style : "font-family: Arial, Helvetica, sans-serif;  position: relative;  top: 40%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
-						});
-					}
+					
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
@@ -467,8 +444,11 @@
 						});
 
 					});
-
-					pos[next % cols] = pos[next % cols] + dict[i].height + 10;
+					
+					pos[next % cols] = pos[next % cols] + parseFloat(dict[i].height) + 10;
+					
+					
+					
 					m.append(k);
 
 					n.html("<h2 style='border: 1px solid #555; padding: 8px; color: #555; font-size: 14px; line-height: 18px;'>" + val.title + "</h2><p style='color: #555'>Model: " + val.model + "</p>")
@@ -494,11 +474,11 @@
 				for (var i = 0; i < pos.length; i++) {
 					if (pos[i] != pos[lowest]) {
 						var m = $(document.createElement('div'));
+						
 						m.attr({
 							class : "tile",
 							style : "position: absolute; top:" + pos[i % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
 						});
-						console.log('filler');
 						$("#wrapper").append(m);
 					}
 				}
@@ -518,10 +498,10 @@
 
 			function lowestCol(pos) {
 				var ele = 0;
-				var list = [];
 				for (var temp = 0; temp < pos.length; temp++) {
 					if (pos[ele] < pos[temp]) {
 						ele = temp;
+						
 					}
 				}
 				console.log("lowest is:" + ele);
