@@ -123,7 +123,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 	case 'GET' :
 		$the_request = &$_GET;
 		api_get();
-		header('Content-Type: application/json');
+		//header('Content-Type: application/json');
 		break;
 	case 'POST' :
 		$the_request = &$_POST;
