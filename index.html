@@ -91,12 +91,13 @@
 				-moz-border-radius: 25px;
 				background-color: #000;
 				border-radius: 25px;
-				position: absolute;
-				top: 50px;
-				right: 80px;
 				border: 1px solid #000;
 				opacity: 0;
+				position: absolute;
 				-webkit-transition: opacity .25s ease-in;
+				background-repeat: no-repeat;
+				background-position-x: 12px;
+				background-position-y: 13px;
 			}
 			#back:hover {
 				-o-transition-duration: .25s;
@@ -131,6 +132,9 @@
 				zoom: 1;
 				opacity: 1;
 			}
+
+		
+
 		</style>
 
 	</head>
@@ -147,6 +151,12 @@
 
 			var rightwrapper = $(document.createElement('div'));
 			var back_button = $(document.createElement('div'));
+
+			var next_button = $(document.createElement('div'));
+			var next_arrow = $(document.createElement('div'));
+			var prev_button = $(document.createElement('div'));
+			var prev_arrow = $(document.createElement('div'));
+
 			var left_line = $(document.createElement('div'));
 			var right_line = $(document.createElement('div'));
 			rightwrapper.attr({
@@ -158,8 +168,21 @@
 
 			back_button.attr({
 				id : 'back',
+				style : "top: 50px; right: 80px",
 			});
 
+			
+
+			next_button.attr({
+				id : 'back',
+				style : "top: 50px; left: 130px; background-image: url(img/next.png)",
+			});
+
+			prev_button.attr({
+				id : 'back',
+				style : "top: 50px; left: 60px; background-image: url(img/prev.png)",
+			});
+			
 			back_button.append(left_line);
 			back_button.append(right_line);
 
@@ -264,23 +287,30 @@
 				model : "roddirockz",
 			};
 
-			dict.push(img1);
-			dict.push(img2);
-			dict.push(img3);
-			dict.push(img4);
-			dict.push(img9);
+			// dict.push(img1);
+			// dict.push(img2);
+			// dict.push(img3);
+			// dict.push(img4);
+			// dict.push(img9);
 
-			dict.push(img8);
-			dict.push(img6);
-			dict.push(img7);
-			dict.push(img5);
-			dict.push(img10);
-			dict.push(img10);
-			dict.push(img10);
+			// dict.push(img8);
+			// dict.push(img6);
+			// dict.push(img7);
+			// dict.push(img5);
+			// dict.push(img10);
+			// dict.push(img10);
+			// dict.push(img10);
 
 			var cols = 4;
 
-			printCategory();
+						console.log('bla');
+			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
+					for(var key in msg){
+						dict.push(msg[key]);	
+					}
+					printCategory();
+				
+			});
 
 			function printCategory() {
 
@@ -347,6 +377,8 @@
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
+						rightwrapper.append(next_button);
+						rightwrapper.append(prev_button);
 
 						$(back_button).click(function() {
 
@@ -368,7 +400,7 @@
 							});
 						});
 
-						$(back_button).mouseenter(function() {
+						$(back_button, prev_button, next_button).mouseenter(function() {
 							$(back_button).animate({
 								opacity : 0.7,
 
@@ -407,6 +439,21 @@
 							}, 2000, function() {
 								$(back_button).css('display', 'block');
 								$(back_button).css('opacity', '0');
+
+								$(next_button).animate({
+									opacity : 0.2,
+
+								}, 500, function() {
+
+								});
+
+								$(prev_button).animate({
+									opacity : 0.2,
+
+								}, 500, function() {
+
+								});
+
 								$(back_button).animate({
 									opacity : 0.2,
 
