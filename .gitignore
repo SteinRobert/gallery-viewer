@@ -7,3 +7,7 @@
 *.json
 *.project
 img/
+etc/
+thumb/
+*.ds_store
+.settings/
