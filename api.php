@@ -6,6 +6,15 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 
+function get_username(){
+	return "user";	
+} 
+
+function get_password(){
+	return "password";
+}
+
+
 function api_get() {
 	if (isset($_GET['rpc']) && $_GET['rpc'] == 'picdir') {
 		$result = array();
@@ -36,7 +45,7 @@ function to_json($my_result) {
 }
 
 function is_auth() {
-	if ((isset($_POST['username']) && $_POST['username'] == 'mschilonka') && (isset($_POST['password']) && $_POST['password'] == 'geheim123')) {
+	if ((isset($_POST['username']) && $_POST['username'] == get_username()) && (isset($_POST['password']) && $_POST['password'] == get_password())) {
 		return;
 	} else {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
