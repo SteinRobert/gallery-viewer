@@ -305,7 +305,8 @@
 
 						console.log('bla');
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
-					for(var key in msg){
+					var pictures = $.parseJSON(msg);
+					for(var key in pictures){
 						dict.push(msg[key]);	
 					}
 					printCategory();
