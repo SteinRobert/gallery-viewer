@@ -15,6 +15,7 @@ function get_password(){
 
 
 function api_get() {
+	check_dir();
 	if (isset($_GET['rpc']) && $_GET['rpc'] == 'picdir') {
 		$result = array();
 		if ($handle = opendir('etc')) {
