@@ -71,9 +71,9 @@ function write_descriptor($height, $width){
 	'" , "path": "'. $path.
 	 '", "title": "'.$title.
 	 '", "model": "'.$description.
-	 '", "height": "'.$height.
-	 '", "width": "'.$width.
-	 '", "category": ['.$category.']'.
+	 '", "height": '.intval($height).
+	 ', "width": '.intval($width).
+	 ', "category": ['.$category.']'.
 	 '}';
 	$file = fopen('etc/'.$title.'.json', 'w');
 	fwrite($file, $stringdata);
