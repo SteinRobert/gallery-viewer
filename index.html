@@ -445,7 +445,7 @@
 
 					});
 					
-					pos[next % cols] = pos[next % cols] + parseFloat(dict[i].height) + 10;
+					pos[next % cols] = pos[next % cols] + dict[i].height + 10;
 					
 					
 					
@@ -477,7 +477,7 @@
 						
 						m.attr({
 							class : "tile",
-							style : "position: absolute; top:" + pos[i % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
+							style : "position: absolute; top:" + (pos[i % cols] +10 )+ "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] -10) + "px;",
 						});
 						$("#wrapper").append(m);
 					}
