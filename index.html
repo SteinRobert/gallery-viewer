@@ -305,8 +305,8 @@
 
 						console.log('bla');
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
-					var pictures = $.parseJSON(msg);
-					for(var key in pictures){
+
+					for(var key in msg){
 						dict.push(msg[key]);	
 					}
 					printCategory();
@@ -495,9 +495,10 @@
 					if (pos[i] != pos[lowest]) {
 						var m = $(document.createElement('div'));
 						m.attr({
-							class : "image",
+							class : "tile",
 							style : "position: absolute; top:" + pos[i % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
 						});
+						console.log('filler');
 						$("#wrapper").append(m);
 					}
 				}
