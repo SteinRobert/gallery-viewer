@@ -81,7 +81,7 @@
 				-webkit-transition: opacity .25s ease-in;
 			}
 
-			#back {
+			#back, #prev, #next {
 				-o-transition-duration: .25s;
 				-moz-transition-duration: .25s;
 				-webkit-transition: -webkit-transform .25s;
@@ -99,7 +99,7 @@
 				background-position-x: 12px;
 				background-position-y: 13px;
 			}
-			#back:hover {
+			#back:hover, #prev:hover, #next:hover {
 				-o-transition-duration: .25s;
 				-moz-transition-duration: .25s;
 				-webkit-transition: -webkit-transform .25s;
@@ -174,13 +174,13 @@
 			
 
 			next_button.attr({
-				id : 'back',
-				style : "top: 50px; left: 130px; background-image: url(img/next.png)",
+				id : 'prev',
+				style : "top: 50px; right: 150px; background-image: url(img/next.png)",
 			});
 
 			prev_button.attr({
-				id : 'back',
-				style : "top: 50px; left: 60px; background-image: url(img/prev.png)",
+				id : 'next',
+				style : "top: 50px; right: 220px; background-image: url(img/prev.png)",
 			});
 			
 			back_button.append(left_line);
@@ -393,8 +393,8 @@
 							});
 						});
 
-						$(back_button, prev_button, next_button).mouseenter(function() {
-							$(back_button).animate({
+						$(back_button).add(prev_button).add(next_button).mouseenter(function() {
+							$(this).animate({
 								opacity : 0.7,
 
 							}, 0, function() {
@@ -402,8 +402,8 @@
 							});
 						});
 
-						$(back_button).mouseleave(function() {
-							$(back_button).animate({
+						$(back_button).add(prev_button).add(next_button).mouseleave(function() {
+							$(this).animate({
 								opacity : 0.2,
 
 							}, 0, function() {
