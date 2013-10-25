@@ -1,9 +1,8 @@
 <?php
 /*
  * Created on Oct 24, 2013
+ * Gallery-Viewer API Backend
  *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 
 function get_username(){
@@ -34,8 +33,10 @@ function api_get() {
 
 function api_post() {
 	is_auth();
+	check_dir();
 	write_file();
 }
+
 
 function to_json($my_result) {
 	$result = '';
@@ -51,6 +52,15 @@ function is_auth() {
 	} else {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
 		exit ;
+	}
+}
+
+function check_dir(){
+	$dirs = array('img/', 'etc/', 'thumb/');
+	foreach($dirs as $dir){
+		if(!file_exists($dir)){
+			mkdir($dir);
+		}
 	}
 }
 
@@ -106,13 +116,13 @@ function write_file() {
 		if ($_FILES["file"]["error"] > 0) {
 			header($_SERVER['SERVER_PROTOCOL'] . ' 500 Error', true, 500);
 		} else {
+			header($_SERVER['SERVER_PROTOCOL'] . ' 200', true, 200);
 			echo "Upload: " . $_FILES["file"]["name"] . "<br>";
 			echo "Type: " . $_FILES["file"]["type"] . "<br>";
 			echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
 			echo "Stored in: " . $_FILES["file"]["tmp_name"];
 			move_uploaded_file($_FILES["file"]["tmp_name"], 'img/'.$_FILES['file']['name']);
 			create_thumb(imagecreatefromjpeg('img/'.$_FILES['file']['name']));
-
 		}
 	} else {
 		header($_SERVER['SERVER_PROTOCOL'] . ' 500 Error', true, 500);
