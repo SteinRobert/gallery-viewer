@@ -33,7 +33,6 @@
 				-webkit-transition: -webkit-transform 1s;
 				background: center center no-repeat #FFF;
 				cursor: pointer;
-				
 				width: 240px;
 				position: absolute;
 				z-index: 10;
@@ -118,8 +117,6 @@
 				opacity: 1;
 			}
 
-		
-
 		</style>
 
 	</head>
@@ -153,21 +150,19 @@
 
 			back_button.attr({
 				id : 'back',
-				style : "top: 50px; right: 80px",
+				style : "top: 50px; right: 80px; z-index: 10000;",
 			});
-
-			
 
 			next_button.attr({
 				id : 'prev',
-				style : "top: 50px; right: 150px; background-image: url(img/next.png)",
+				style : "top: 50px; right: 150px; background-image: url(img/next.png); z-index: 10000;",
 			});
 
 			prev_button.attr({
 				id : 'next',
-				style : "top: 50px; right: 220px; background-image: url(img/prev.png)",
+				style : "top: 50px; right: 220px; background-image: url(img/prev.png); z-index: 10000;",
 			});
-			
+
 			back_button.append(left_line);
 			back_button.append(right_line);
 
@@ -183,94 +178,94 @@
 				id : 'line2',
 
 			});
-
-			var img1 = {
-				path_thumb : "img/DSC_0093_01.png",
-				path : "img/DSC_0093_01_big.png",
-				height : 361,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-			var img2 = {
-				path_thumb : "img/DSC_0048.png",
-				path : "img/DSC_0048_big.png",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-			var img3 = {
-				path_thumb : "img/notbusiness1.jpg",
-				path : "img/notbusiness1_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img4 = {
-				path_thumb : "img/DSC_0301.png",
-				path : "img/DSC_0301_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img5 = {
-				path_thumb : "img/DSC_0139.png",
-				path : "img/DSC_0139_big.png",
-				height : 361,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img6 = {
-				path_thumb : "img/DSC_0254.png",
-				path : "img/DSC_0254_big.png",
-				height : 361,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img7 = {
-				path_thumb : "img/DSC_0125.jpg",
-				path : "img/DSC_0125_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img8 = {
-				path_thumb : "img/DSC_0163.jpg",
-				path : "img/DSC_0163_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img9 = {
-				path_thumb : "img/DSC_0221.jpg",
-				path : "img/DSC_0221_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
-
-			var img10 = {
-				path_thumb : "img/DSC_0221.jpg",
-				path : "img/DSC_0221_big.jpg",
-				height : 160,
-				width : 240,
-				title : "SCHILLE PHOTOGRAPHY",
-				model : "roddirockz",
-			};
+			//
+			// var img1 = {
+			// path_thumb : "img/DSC_0093_01.png",
+			// path : "img/DSC_0093_01_big.png",
+			// height : 361,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			// var img2 = {
+			// path_thumb : "img/DSC_0048.png",
+			// path : "img/DSC_0048_big.png",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			// var img3 = {
+			// path_thumb : "img/notbusiness1.jpg",
+			// path : "img/notbusiness1_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img4 = {
+			// path_thumb : "img/DSC_0301.png",
+			// path : "img/DSC_0301_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img5 = {
+			// path_thumb : "img/DSC_0139.png",
+			// path : "img/DSC_0139_big.png",
+			// height : 361,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img6 = {
+			// path_thumb : "img/DSC_0254.png",
+			// path : "img/DSC_0254_big.png",
+			// height : 361,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img7 = {
+			// path_thumb : "img/DSC_0125.jpg",
+			// path : "img/DSC_0125_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img8 = {
+			// path_thumb : "img/DSC_0163.jpg",
+			// path : "img/DSC_0163_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img9 = {
+			// path_thumb : "img/DSC_0221.jpg",
+			// path : "img/DSC_0221_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
+			//
+			// var img10 = {
+			// path_thumb : "img/DSC_0221.jpg",
+			// path : "img/DSC_0221_big.jpg",
+			// height : 160,
+			// width : 240,
+			// title : "SCHILLE PHOTOGRAPHY",
+			// model : "roddirockz",
+			// };
 
 			// dict.push(img1);
 			// dict.push(img2);
@@ -287,15 +282,13 @@
 			// dict.push(img10);
 
 			var cols = 4;
-
-						console.log('bla');
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
 
-					for(var key in msg){
-						dict.push(msg[key]);	
-					}
-					printCategory();
-				
+				for (var key in msg) {
+					dict.push(msg[key]);
+				}
+				printCategory();
+
 			});
 
 			function printCategory() {
@@ -303,7 +296,7 @@
 				for (var o = 0; o < cols; o++) {
 					pos[o] = 20;
 				}
-
+				var current = 0;
 				//start tile
 				var m = $(document.createElement('div'));
 				m.attr({
@@ -330,7 +323,7 @@
 
 				var next = 0;
 				jQuery.each(dict, function(i, val) {
-					console.log(val);
+
 					//for (var i = 0; i < dict.length; i++) {
 
 					var m = $(document.createElement('div'));
@@ -340,22 +333,118 @@
 						style : "position: absolute; top:" + pos[next % cols] + "px;left:50%; margin-left:" + (-(124 * cols) + (next % cols) * 250) + "px;",
 					});
 					var k = $(document.createElement('span'));
-					
-						k.attr({
-							class : "rollover_w",
-							style : "display: inline-block; text-align: center; height:"+val.height+"px;",
-						});
-						var n = $(document.createElement('span'));
-						n.attr({
-							style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
-						});
 
-					
+					k.attr({
+						class : "rollover_w",
+						style : "display: inline-block; text-align: center; height:" + val.height + "px;",
+					});
+					var n = $(document.createElement('span'));
+					n.attr({
+						style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
+					});
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
 						rightwrapper.append(next_button);
 						rightwrapper.append(prev_button);
+
+						next_button.click(function() {
+							
+							console.log("current is " + current);
+							
+							var img_n1 = $(document.createElement('img'));
+						img_n1.attr({
+							src : dict[current+1].path,
+							class : "bild",
+							id : "bigpicture"+(current+1),
+							width : $(window).width(),
+							style : "display: none; left: 0px; top: 0px; position: absolute;",
+						});
+
+						var img_n2 = $(document.createElement('img'));
+						img_n2.attr({
+							src : dict[current+1].path_thumb,
+							class : "bild",
+							id : "bigpicture_thumb"+(current+1),
+							width : $(window).width(),
+
+							style : "display: inline-block; left: "+$(window).width()+"px; top: 0px; position: absolute;",
+						});
+						
+						$(rightwrapper).append(img_n2);
+						$(rightwrapper).append(img_n1);
+
+							
+							$(img_n1).one('load', function() {
+							$(img_n2).animate({
+								left : "0px",
+							}, 500, function() {
+								
+								$(img_n2).css('display', 'none');
+								$(img_n1).css('display', 'inline-block');
+								console.log("removing #bigpicture"+(current)+"");
+								$("#bigpicture"+(current-1)+"").remove();
+								$("#bigpicture_thumb"+(current-1)+"").remove();
+							});
+							current++;
+						}).each(function() {
+							if (this.complete)
+								$(this).load();
+						});
+							
+							
+						// $('#rightwrapper').animate({
+							// marginRight: +$(window).width()+"px",
+						// });
+						
+							
+						});
+						prev_button.click(function() {
+							
+							console.log("current is " + current);
+							
+							var img_n1 = $(document.createElement('img'));
+						img_n1.attr({
+							src : dict[current-1].path,
+							class : "bild",
+							id : "bigpicture"+(current-1),
+							width : $(window).width(),
+							style : "display: none; left: 0px; top: 0px; position: absolute;",
+						});
+
+						var img_n2 = $(document.createElement('img'));
+						img_n2.attr({
+							src : dict[current-1].path_thumb,
+							class : "bild",
+							id : "bigpicture_thumb"+(current-1),
+							width : $(window).width(),
+
+							style : "display: inline-block; right: "+$(window).width()+"px; top: 0px; position: absolute;",
+						});
+						
+						$(rightwrapper).append(img_n2);
+						$(rightwrapper).append(img_n1);
+
+							
+							$(img_n1).one('load', function() {
+							$(img_n2).animate({
+								right : "0px",
+							}, 500, function() {
+								
+								$(img_n2).css('display', 'none');
+								$(img_n1).css('display', 'inline-block');
+								console.log("removing #bigpicture"+(current)+"");
+								$("#bigpicture"+(current+1)+"").remove();
+								$("#bigpicture_thumb"+(current+1)+"").remove();
+							});
+							current--;
+						}).each(function() {
+							if (this.complete)
+								$(this).load();
+						});
+							
+							
+						});
 
 						$(back_button).click(function() {
 
@@ -398,25 +487,26 @@
 						$('#masterwrapper').css('width', '200%');
 						$('#wrapper').css('width', '50%');
 						$('#masterwrapper').append(rightwrapper);
+
 						var img = $(document.createElement('img'));
 						img.attr({
 							src : val.path,
-							class : "bild",
-							id : "bigpicture",
+							class : "bild_n",
+							id : "bigpicture"+i,
 							width : $(window).width(),
 							style : "display: none;",
 						});
-						
+
 						var img2 = $(document.createElement('img'));
 						img2.attr({
 							src : val.path_thumb,
-							class : "bild",
-							id : "bigpicture",
+							class : "bild_n",
+							id : "bigpicture_thumb"+i,
 							width : $(window).width(),
 
 							style : "display: inline-block;",
 						});
-						
+
 						$(rightwrapper).append(img2);
 						$(rightwrapper).append(img);
 
@@ -426,30 +516,26 @@
 							}, 500, function() {
 								$(back_button).add(prev_button).add(next_button).css('display', 'block');
 								$(back_button).add(prev_button).add(next_button).css('opacity', '0');
-								
+
 								$(back_button).add(prev_button).add(next_button).animate({
 									opacity : 0.2,
 
 								}, 500, function() {
 
 								});
-								$(img2).css('display','none');
+								current = i;
+								$(img2).css('display', 'none');
 								$(img).css('display', 'inline-block');
-							}
-							
-							
-							);
+							});
 						}).each(function() {
 							if (this.complete)
 								$(this).load();
 						});
 
 					});
-					
+
 					pos[next % cols] = pos[next % cols] + dict[i].height + 10;
-					
-					
-					
+
 					m.append(k);
 
 					n.html("<h2 style='border: 1px solid #555; padding: 8px; color: #555; font-size: 14px; line-height: 18px;'>" + val.title + "</h2><p style='color: #555'>Model: " + val.model + "</p>")
@@ -475,10 +561,10 @@
 				for (var i = 0; i < pos.length; i++) {
 					if (pos[i] != pos[lowest]) {
 						var m = $(document.createElement('div'));
-						
+
 						m.attr({
 							class : "tile",
-							style : "position: absolute; top:" + (pos[i % cols] +10 )+ "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] -10) + "px;",
+							style : "position: absolute; top:" + (pos[i % cols] + 10 ) + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
 						});
 						$("#wrapper").append(m);
 					}
@@ -502,7 +588,7 @@
 				for (var temp = 0; temp < pos.length; temp++) {
 					if (pos[ele] < pos[temp]) {
 						ele = temp;
-						
+
 					}
 				}
 				console.log("lowest is:" + ele);
