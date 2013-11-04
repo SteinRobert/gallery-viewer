@@ -10,7 +10,7 @@
 		<title>index</title>
 		<meta name="description" content="" />
 		<meta name="author" content="Robert Stein" />
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -130,7 +130,7 @@
 		</div>
 		<script>
 			var dict = [];
-
+			var cols = Math.floor($(window).width()/256);
 			var rightwrapper = $(document.createElement('div'));
 			var back_button = $(document.createElement('div'));
 
@@ -144,6 +144,27 @@
 			rightwrapper.attr({
 				id : 'rightwrapper',
 			});
+			
+			var resize = function resize () {
+				if(Math.floor($(window).width()/256) != cols) {
+					
+					
+					if($('#rightwrapper').length == 0) {
+							console.log(cols);
+				cols = Math.floor($(window).width()/256);
+				$('#wrapper').empty();
+				printCategory();
+					}
+					else {
+						
+					}
+					
+
+				}
+			}
+			
+			$(window).resize(resize);
+			
 			rightwrapper.css('width', '50%');
 			rightwrapper.css('float', 'right');
 			rightwrapper.css('text-align', 'center');
@@ -280,8 +301,7 @@
 			// dict.push(img10);
 			// dict.push(img10);
 			// dict.push(img10);
-
-			var cols = 4;
+			
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
 
 				for (var key in msg) {
@@ -345,20 +365,31 @@
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
+						if (i!= dict.length-1)
 						rightwrapper.append(next_button);
+						if (i != 0)
 						rightwrapper.append(prev_button);
 
 						next_button.click(function() {
 							
 							console.log("current is " + current);
+							if (current == 0) {
+							prev_button.css('display', 'block');
+							rightwrapper.append(prev_button);
+							}
+							
+							if (current == dict.length-2)
+							next_button.css('display', 'none');
+							
+							
 							
 							var img_n1 = $(document.createElement('img'));
 						img_n1.attr({
 							src : dict[current+1].path,
 							class : "bild",
 							id : "bigpicture"+(current+1),
-							width : $(window).width(),
-							style : "display: none; left: 0px; top: 0px; position: absolute;",
+							
+							style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: absolute;",
 						});
 
 						var img_n2 = $(document.createElement('img'));
@@ -366,9 +397,9 @@
 							src : dict[current+1].path_thumb,
 							class : "bild",
 							id : "bigpicture_thumb"+(current+1),
-							width : $(window).width(),
+							
 
-							style : "display: inline-block; left: "+$(window).width()+"px; top: 0px; position: absolute;",
+							style : "width: 100%; height: auto; display: inline-block; left: "+$(window).width()+"px; top: 0px; position: absolute;",
 						});
 						
 						$(rightwrapper).append(img_n2);
@@ -387,6 +418,7 @@
 								$("#bigpicture_thumb"+(current-1)+"").remove();
 							});
 							current++;
+							
 						}).each(function() {
 							if (this.complete)
 								$(this).load();
@@ -402,14 +434,22 @@
 						prev_button.click(function() {
 							
 							console.log("current is " + current);
+							if (current == dict.length-1) {
+								rightwrapper.append(next_button);
+							next_button.css('display','block');
+							}
+							if (current == 1)
+							prev_button.css('display','none');
+							if(current == 0) 
+							prev_button.css('display', 'none');
 							
 							var img_n1 = $(document.createElement('img'));
 						img_n1.attr({
 							src : dict[current-1].path,
 							class : "bild",
 							id : "bigpicture"+(current-1),
-							width : $(window).width(),
-							style : "display: none; left: 0px; top: 0px; position: absolute;",
+							
+							style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: absolute;",
 						});
 
 						var img_n2 = $(document.createElement('img'));
@@ -417,9 +457,7 @@
 							src : dict[current-1].path_thumb,
 							class : "bild",
 							id : "bigpicture_thumb"+(current-1),
-							width : $(window).width(),
-
-							style : "display: inline-block; right: "+$(window).width()+"px; top: 0px; position: absolute;",
+							style : "width: 100%; height: auto; display: inline-block; right: "+$(window).width()+"px; top: 0px; position: absolute;",
 						});
 						
 						$(rightwrapper).append(img_n2);
@@ -438,6 +476,7 @@
 								$("#bigpicture_thumb"+(current+1)+"").remove();
 							});
 							current--;
+							
 						}).each(function() {
 							if (this.complete)
 								$(this).load();
@@ -462,8 +501,10 @@
 								$("#wrapper").css('width', "100%");
 								$(rightwrapper).remove();
 								$(rightwrapper).empty();
+								resize();
 
 							});
+							
 						});
 
 						$(back_button).add(prev_button).add(next_button).mouseenter(function() {
