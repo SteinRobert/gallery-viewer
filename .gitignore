@@ -11,3 +11,5 @@ etc/
 thumb/
 *.ds_store
 .settings/
+!next_1.png
+!prev_1.png

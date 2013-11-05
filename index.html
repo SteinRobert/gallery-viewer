@@ -7,13 +7,14 @@
 		Remove this if you use the .htaccess -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-		<title>index</title>
+		<title>Schilonka | Photography Gallery</title>
 		<meta name="description" content="" />
 		<meta name="author" content="Robert Stein" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<style>
 			html, body, p, table, div {
@@ -24,6 +25,11 @@
 
 			.image {
 				margin: 10px;
+			}
+
+			h1 {
+				font-size: 40px;
+				color: #CCC;
 			}
 
 			span.rollover_w {
@@ -122,16 +128,35 @@
 	</head>
 
 	<body>
-		<div style="width:100%;" id="masterwrapper">
-			<div style="position: relative; width: 100%; float:left;" id="wrapper">
 
+		<div style="width:100%;" id="masterwrapper">
+
+			<div style="position: relative; width: 100%; float:left;" id="wrapper_out">
+				<div class="container" style="margin-left:  auto; margin-right: auto; float: none;  inline-block; text-align: center;">
+					<div style="margin-right: 0px; margin-left: 0px; ">
+						<h1 style="padding: 5px; outline: 2px solid #CCC; font-family: 'Poiret One'">Your | Photography</h1>
+					</div>
+				</div>
+				<div style="position: relative; width: 100%; float:left;" id="wrapper"></div>
 			</div>
 
 		</div>
 		<script>
+		
+		/* Settings to be set here */
+		var maxCol = 7;		//Maximal columns on a oage.
+		
 			var dict = [];
-			var cols = Math.floor($(window).width()/256);
-			var rightwrapper = $(document.createElement('div'));
+			var cols = Math.floor($(window).width() / 256);
+			
+				/*Don't use more than maxCol cols */
+				cols = (cols > maxCol && maxCol) || cols;	//If col is bigger than maxCol use maxCol else col.
+			
+			
+			/* Create all needed divs. This is the most effecient way is jQuery. */
+			var rightwrapper = $(document.createElement('div')).attr({
+				id : 'rightwrapper',
+			});
 			var back_button = $(document.createElement('div'));
 
 			var next_button = $(document.createElement('div'));
@@ -141,30 +166,23 @@
 
 			var left_line = $(document.createElement('div'));
 			var right_line = $(document.createElement('div'));
-			rightwrapper.attr({
-				id : 'rightwrapper',
-			});
 			
-			var resize = function resize () {
-				if(Math.floor($(window).width()/256) != cols) {
-					
-					
-					if($('#rightwrapper').length == 0) {
-							console.log(cols);
-				cols = Math.floor($(window).width()/256);
-				$('#wrapper').empty();
-				printCategory();
-					}
-					else {
-						
-					}
-					
-
+			
+			
+			/* If window was resized, repaint the gallery preview.*/
+			var resize = function resize() {
+				if (Math.floor($(window).width() / 256) != cols) {
+					if ($('#rightwrapper').length == 0) {
+						console.log(cols);
+						cols = Math.floor($(window).width() / 256);
+						$('#wrapper').empty();
+						printCategory();
+					} 
 				}
 			}
-			
+
 			$(window).resize(resize);
-			
+
 			rightwrapper.css('width', '50%');
 			rightwrapper.css('float', 'right');
 			rightwrapper.css('text-align', 'center');
@@ -176,12 +194,12 @@
 
 			next_button.attr({
 				id : 'prev',
-				style : "top: 50px; right: 150px; background-image: url(img/next.png); z-index: 10000;",
+				style : "top: 50px; right: 150px; background-image: url(img/next_1.png); background-position: 55% 50%; z-index: 10000;",
 			});
 
 			prev_button.attr({
 				id : 'next',
-				style : "top: 50px; right: 220px; background-image: url(img/prev.png); z-index: 10000;",
+				style : "top: 50px; right: 220px; background-image: url(img/prev_1.png); background-position: 45% 50%; z-index: 10000;",
 			});
 
 			back_button.append(left_line);
@@ -199,119 +217,26 @@
 				id : 'line2',
 
 			});
-			//
-			// var img1 = {
-			// path_thumb : "img/DSC_0093_01.png",
-			// path : "img/DSC_0093_01_big.png",
-			// height : 361,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			// var img2 = {
-			// path_thumb : "img/DSC_0048.png",
-			// path : "img/DSC_0048_big.png",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			// var img3 = {
-			// path_thumb : "img/notbusiness1.jpg",
-			// path : "img/notbusiness1_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img4 = {
-			// path_thumb : "img/DSC_0301.png",
-			// path : "img/DSC_0301_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img5 = {
-			// path_thumb : "img/DSC_0139.png",
-			// path : "img/DSC_0139_big.png",
-			// height : 361,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img6 = {
-			// path_thumb : "img/DSC_0254.png",
-			// path : "img/DSC_0254_big.png",
-			// height : 361,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img7 = {
-			// path_thumb : "img/DSC_0125.jpg",
-			// path : "img/DSC_0125_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img8 = {
-			// path_thumb : "img/DSC_0163.jpg",
-			// path : "img/DSC_0163_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img9 = {
-			// path_thumb : "img/DSC_0221.jpg",
-			// path : "img/DSC_0221_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
-			//
-			// var img10 = {
-			// path_thumb : "img/DSC_0221.jpg",
-			// path : "img/DSC_0221_big.jpg",
-			// height : 160,
-			// width : 240,
-			// title : "SCHILLE PHOTOGRAPHY",
-			// model : "roddirockz",
-			// };
 
-			// dict.push(img1);
-			// dict.push(img2);
-			// dict.push(img3);
-			// dict.push(img4);
-			// dict.push(img9);
-
-			// dict.push(img8);
-			// dict.push(img6);
-			// dict.push(img7);
-			// dict.push(img5);
-			// dict.push(img10);
-			// dict.push(img10);
-			// dict.push(img10);
-			
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
 
 				for (var key in msg) {
 					dict.push(msg[key]);
 				}
 				printCategory();
-
 			});
 
-			function printCategory() {
+			// var jqxhr1 = $.ajax("api.php?rpc=categories").always(function(msg) {
+			//
+			// for (var key in msg) {
+			// categories.push(msg[key]);
+			// }
+			//
+			//
+			//
+			// });
+
+			function printCategory(catName, backgroundColor, fontColor) {
 				var pos = []
 				for (var o = 0; o < cols; o++) {
 					pos[o] = 20;
@@ -335,7 +260,7 @@
 
 				m.append(k);
 
-				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>SCHILLE CATEGORY</h2><p style='color: #CCC'>UNDERTITLE </p>")
+				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>SCHILLE CATEGORY</h2><p style='color: #CCC'>SUBTITLE </p>")
 				k.append(n);
 
 				$("#wrapper").append(m);
@@ -365,132 +290,127 @@
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
-						if (i!= dict.length-1)
-						rightwrapper.append(next_button);
+						if (i != dict.length - 1)
+							rightwrapper.append(next_button);
 						if (i != 0)
-						rightwrapper.append(prev_button);
+							rightwrapper.append(prev_button);
 
 						next_button.click(function() {
-							
-							console.log("current is " + current);
 							if (current == 0) {
-							prev_button.css('display', 'block');
-							rightwrapper.append(prev_button);
-							}
-							
-							if (current == dict.length-2)
-							next_button.css('display', 'none');
-							
-							
-							
-							var img_n1 = $(document.createElement('img'));
-						img_n1.attr({
-							src : dict[current+1].path,
-							class : "bild",
-							id : "bigpicture"+(current+1),
-							
-							style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: absolute;",
-						});
-
-						var img_n2 = $(document.createElement('img'));
-						img_n2.attr({
-							src : dict[current+1].path_thumb,
-							class : "bild",
-							id : "bigpicture_thumb"+(current+1),
-							
-
-							style : "width: 100%; height: auto; display: inline-block; left: "+$(window).width()+"px; top: 0px; position: absolute;",
-						});
-						
-						$(rightwrapper).append(img_n2);
-						$(rightwrapper).append(img_n1);
-
-							
-							$(img_n1).one('load', function() {
-							$(img_n2).animate({
-								left : "0px",
-							}, 500, function() {
 								
-								$(img_n2).css('display', 'none');
-								$(img_n1).css('display', 'inline-block');
-								console.log("removing #bigpicture"+(current)+"");
-								$("#bigpicture"+(current-1)+"").remove();
-								$("#bigpicture_thumb"+(current-1)+"").remove();
+								rightwrapper.append(prev_button);
+								prev_button.fadeIn("slow", function () {
+									prev_button.css('display', 'block');
+								});
+							}
+
+							if (current == dict.length - 2)
+								next_button.fadeOut("slow", function () {
+									next_button.css('display', 'none');
+								});
+								
+
+							var img_n1 = $(document.createElement('img'));
+							img_n1.attr({
+								src : dict[current + 1].path,
+								class : "bild",
+								id : "bigpicture" + (current + 1),
+
+								style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: static;",
 							});
-							current++;
-							
-						}).each(function() {
-							if (this.complete)
-								$(this).load();
+
+							var img_n2 = $(document.createElement('img'));
+							img_n2.attr({
+								src : dict[current + 1].path_thumb,
+								class : "bild",
+								id : "bigpicture_thumb" + (current + 1),
+
+								style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: 0px; position: absolute;",
+							});
+
+							$(rightwrapper).append(img_n2);
+							$(rightwrapper).append(img_n1);
+
+							$(img_n1).one('load', function() {
+								$(img_n2).animate({
+									left : "0px",
+								}, 500, function() {
+
+									$(img_n2).css('display', 'none');
+									$(img_n1).css('display', 'inline-block');
+									console.log("removing #bigpicture" + (current) + "");
+									$("#bigpicture" + (current - 1) + "").remove();
+									$("#bigpicture_thumb" + (current - 1) + "").remove();
+								});
+								current++;
+
+							}).each(function() {
+								if (this.complete)
+									$(this).load();
+							});
+
 						});
-							
-							
-						// $('#rightwrapper').animate({
-							// marginRight: +$(window).width()+"px",
-						// });
-						
-							
-						});
+
 						prev_button.click(function() {
-							
-							console.log("current is " + current);
-							if (current == dict.length-1) {
+							if (current == dict.length - 1) {
 								rightwrapper.append(next_button);
-							next_button.css('display','block');
+								next_button.css('display', 'block');
 							}
 							if (current == 1)
-							prev_button.css('display','none');
-							if(current == 0) 
-							prev_button.css('display', 'none');
-							
-							var img_n1 = $(document.createElement('img'));
-						img_n1.attr({
-							src : dict[current-1].path,
-							class : "bild",
-							id : "bigpicture"+(current-1),
-							
-							style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: absolute;",
-						});
-
-						var img_n2 = $(document.createElement('img'));
-						img_n2.attr({
-							src : dict[current-1].path_thumb,
-							class : "bild",
-							id : "bigpicture_thumb"+(current-1),
-							style : "width: 100%; height: auto; display: inline-block; right: "+$(window).width()+"px; top: 0px; position: absolute;",
-						});
-						
-						$(rightwrapper).append(img_n2);
-						$(rightwrapper).append(img_n1);
-
-							
-							$(img_n1).one('load', function() {
-							$(img_n2).animate({
-								right : "0px",
-							}, 500, function() {
+								prev_button.fadeOut("slow", function () {
+									prev_button.css('display', 'none');
+								});
 								
-								$(img_n2).css('display', 'none');
-								$(img_n1).css('display', 'inline-block');
-								console.log("removing #bigpicture"+(current)+"");
-								$("#bigpicture"+(current+1)+"").remove();
-								$("#bigpicture_thumb"+(current+1)+"").remove();
+							if (current == 0)
+								prev_button.fadeOut("slow", function () {
+									prev_button.css('display', 'none');
+								});
+								
+
+							var img_n1 = $(document.createElement('img'));
+							img_n1.attr({
+								src : dict[current - 1].path,
+								class : "bild",
+								id : "bigpicture" + (current - 1),
+
+								style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: static;",
 							});
-							current--;
-							
-						}).each(function() {
-							if (this.complete)
-								$(this).load();
-						});
-							
-							
+
+							var img_n2 = $(document.createElement('img'));
+							img_n2.attr({
+								src : dict[current - 1].path_thumb,
+								class : "bild",
+								id : "bigpicture_thumb" + (current - 1),
+								style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: 0px; position: absolute;",
+							});
+
+							$(rightwrapper).append(img_n2);
+							$(rightwrapper).append(img_n1);
+
+							$(img_n1).one('load', function() {
+								$(img_n2).animate({
+									right : "0px",
+								}, 500, function() {
+
+									$(img_n2).css('display', 'none');
+									$(img_n1).css('display', 'inline-block');
+									console.log("removing #bigpicture" + (current) + "");
+									$("#bigpicture" + (current + 1) + "").remove();
+									$("#bigpicture_thumb" + (current + 1) + "").remove();
+								});
+								current--;
+
+							}).each(function() {
+								if (this.complete)
+									$(this).load();
+							});
+
 						});
 
 						$(back_button).click(function() {
 
-							$(back_button).add(prev_button).add(next_button).animate({
-								opacity : 0,
-
-							}, 500, function() {
+							$(back_button).add(prev_button).add(next_button).fadeOut("slow", function () {
+								
 								$(this).css('display', 'none');
 							});
 
@@ -498,13 +418,13 @@
 								marginLeft : "0px",
 							}, 500, function() {
 								$("#masterwrapper").css('width', "100%");
-								$("#wrapper").css('width', "100%");
+								$("#wrapper_out").css('width', "100%");
 								$(rightwrapper).remove();
 								$(rightwrapper).empty();
 								resize();
 
 							});
-							
+
 						});
 
 						$(back_button).add(prev_button).add(next_button).mouseenter(function() {
@@ -526,14 +446,19 @@
 						});
 
 						$('#masterwrapper').css('width', '200%');
-						$('#wrapper').css('width', '50%');
+						$('#wrapper_out').css('width', '50%');
 						$('#masterwrapper').append(rightwrapper);
+
+						rightwrapper.mousemove(function(event) {
+							var position = (event.clientY / $(window).height()) * $(document).height() - 220;
+							$(document).scrollTop(position);
+						});
 
 						var img = $(document.createElement('img'));
 						img.attr({
 							src : val.path,
 							class : "bild_n",
-							id : "bigpicture"+i,
+							id : "bigpicture" + i,
 							width : $(window).width(),
 							style : "display: none;",
 						});
@@ -542,7 +467,7 @@
 						img2.attr({
 							src : val.path_thumb,
 							class : "bild_n",
-							id : "bigpicture_thumb"+i,
+							id : "bigpicture_thumb" + i,
 							width : $(window).width(),
 
 							style : "display: inline-block;",
