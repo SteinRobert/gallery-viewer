@@ -189,17 +189,17 @@
 
 			back_button.attr({
 				id : 'back',
-				style : "top: 50px; right: 80px; z-index: 10000;",
+				style : "top: 50px; right: 80px; z-index: 10000; position: fixed;",
 			});
 
 			next_button.attr({
 				id : 'prev',
-				style : "top: 50px; right: 150px; background-image: url(img/next_1.png); background-position: 55% 50%; z-index: 10000;",
+				style : "top: 50px; right: 150px; background-image: url(img/next_1.png); position: fixed; background-position: 55% 50%; z-index: 10000;",
 			});
 
 			prev_button.attr({
 				id : 'next',
-				style : "top: 50px; right: 220px; background-image: url(img/prev_1.png); background-position: 45% 50%; z-index: 10000;",
+				style : "top: 50px; right: 220px; background-image: url(img/prev_1.png); position: fixed; background-position: 45% 50%; z-index: 10000;",
 			});
 
 			back_button.append(left_line);
@@ -409,7 +409,7 @@
 
 						$(back_button).click(function() {
 
-							$(back_button).add(prev_button).add(next_button).fadeOut("slow", function () {
+							$(back_button).add(prev_button).add(next_button).fadeOut(200, function () {
 								
 								$(this).css('display', 'none');
 							});
