@@ -148,7 +148,7 @@
 		
 			var dict = [];
 			var cols = Math.floor($(window).width() / 256);
-			
+			var map = {};
 				/*Don't use more than maxCol cols */
 				cols = (cols > maxCol && maxCol) || cols;	//If col is bigger than maxCol use maxCol else cols.
 			
@@ -167,6 +167,7 @@
 			var left_line = $(document.createElement('div'));
 			var right_line = $(document.createElement('div'));
 			
+			var height;
 			
 			
 			/* If window was resized, repaint the gallery preview.*/
@@ -217,14 +218,40 @@
 				id : 'line2',
 
 			});
+			
+			var pos = []
+			
+			for (var o = 0; o < cols; o++) {
+					pos[o] = 20;
+			}
 
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
 
 				for (var key in msg) {
 					dict.push(msg[key]);
 				}
-				printCategory();
+				console.log(dict);
+				//printCategory();
+				
+				jQuery.each(dict, function(i, val) {
+					for(i = 0; i < val.category.length; i++) {
+					if(!map[val.category[i]]) map[val.category[i]] = new Array();
+					map[val.category[i]].push(val); 
+					
+					}
+				});
+				
+				
+				jQuery.each(map, function (i, val) {
+					console.log(val);
+					dict = val;
+					printCategory();
+				});
+				
 			});
+			
+			
+			
 
 			// var jqxhr1 = $.ajax("api.php?rpc=categories").always(function(msg) {
 			//
@@ -235,14 +262,17 @@
 			//
 			//
 			// });
+			
+			
 
 			function printCategory(catName, backgroundColor, fontColor) {
-				var pos = []
-				for (var o = 0; o < cols; o++) {
-					pos[o] = 20;
-				}
 				var current = 0;
 				//start tile
+				
+				for (var o = 0; o < cols; o++) {
+					pos[o] = pos[o]+20;
+				}
+				
 				var m = $(document.createElement('div'));
 				m.attr({
 					class : "image",
@@ -287,6 +317,8 @@
 					n.attr({
 						style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
 					});
+					
+					var scrollingTop = $(document).scrollTop();
 
 					m.click(function move() {
 						rightwrapper.append(back_button);
@@ -294,48 +326,56 @@
 							rightwrapper.append(next_button);
 						if (i != 0)
 							rightwrapper.append(prev_button);
-
+							
+						scrollingTop = $(document).scrollTop();
+						
+						var img_n1;	
+						var img_n2;
+						
 						next_button.click(function() {
+							
 							if (current == 0) {
-								
 								rightwrapper.append(prev_button);
 								prev_button.fadeIn("slow", function () {
 									prev_button.css('display', 'block');
 								});
 							}
+							
+							
 
 							if (current == dict.length - 2)
 								next_button.fadeOut("slow", function () {
 									next_button.css('display', 'none');
 								});
 								
-
-							var img_n1 = $(document.createElement('img'));
+							
+							img_n1 = $(document.createElement('img'));
 							img_n1.attr({
 								src : dict[current + 1].path,
 								class : "bild",
 								id : "bigpicture" + (current + 1),
 
-								style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: static;",
+								style : "width: 100%; height: auto; display: none; left: 0px; top: "+scrollingTop+"px; position: absolute;",
 							});
 
-							var img_n2 = $(document.createElement('img'));
+							img_n2 = $(document.createElement('img'));
 							img_n2.attr({
 								src : dict[current + 1].path_thumb,
 								class : "bild",
 								id : "bigpicture_thumb" + (current + 1),
 
-								style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: 0px; position: absolute;",
+								style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: "+scrollingTop+"px; position: absolute;",
 							});
 
 							$(rightwrapper).append(img_n2);
 							$(rightwrapper).append(img_n1);
+							
 
 							$(img_n1).one('load', function() {
 								$(img_n2).animate({
 									left : "0px",
 								}, 500, function() {
-
+									
 									$(img_n2).css('display', 'none');
 									$(img_n1).css('display', 'inline-block');
 									console.log("removing #bigpicture" + (current) + "");
@@ -352,6 +392,7 @@
 						});
 
 						prev_button.click(function() {
+							
 							if (current == dict.length - 1) {
 								rightwrapper.append(next_button);
 								next_button.css('display', 'block');
@@ -367,21 +408,21 @@
 								});
 								
 
-							var img_n1 = $(document.createElement('img'));
+							img_n1 = $(document.createElement('img'));
 							img_n1.attr({
 								src : dict[current - 1].path,
 								class : "bild",
 								id : "bigpicture" + (current - 1),
 
-								style : "width: 100%; height: auto; display: none; left: 0px; top: 0px; position: static;",
+								style : "width: 100%; height: auto; display: none; left: 0px; top: "+scrollingTop+"px; position: absolute;",
 							});
 
-							var img_n2 = $(document.createElement('img'));
+							img_n2 = $(document.createElement('img'));
 							img_n2.attr({
 								src : dict[current - 1].path_thumb,
 								class : "bild",
 								id : "bigpicture_thumb" + (current - 1),
-								style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: 0px; position: absolute;",
+								style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: "+scrollingTop+"px; position: absolute;",
 							});
 
 							$(rightwrapper).append(img_n2);
@@ -408,12 +449,19 @@
 						});
 
 						$(back_button).click(function() {
-
 							$(back_button).add(prev_button).add(next_button).fadeOut(200, function () {
 								
 								$(this).css('display', 'none');
 							});
+							$('#wrapper').css({height:'auto',
+							overflow:'',});
+							
+							if(img_n1 && img_n2) {
+								img_n1.css({'position': 'relative'});
+								img_n2.css({'position': 'relaitve'});
+							}
 
+							
 							$("#masterwrapper").animate({
 								marginLeft : "0px",
 							}, 500, function() {
@@ -422,6 +470,7 @@
 								$(rightwrapper).remove();
 								$(rightwrapper).empty();
 								resize();
+								
 
 							});
 
@@ -448,11 +497,16 @@
 						$('#masterwrapper').css('width', '200%');
 						$('#wrapper_out').css('width', '50%');
 						$('#masterwrapper').append(rightwrapper);
+						
+						
 
 						rightwrapper.mousemove(function(event) {
 							var position = (event.clientY / $(window).height()) * $(document).height() - 220;
-							$(document).scrollTop(position);
+							
+							$(document).scrollTop( (scrollingTop > position && scrollingTop) || position);
 						});
+						
+						
 
 						var img = $(document.createElement('img'));
 						img.attr({
@@ -460,8 +514,9 @@
 							class : "bild_n",
 							id : "bigpicture" + i,
 							width : $(window).width(),
-							style : "display: none;",
+							style : "display: none; position: relative; top: "+scrollingTop+"px;left: 0px;",
 						});
+						
 
 						var img2 = $(document.createElement('img'));
 						img2.attr({
@@ -470,13 +525,16 @@
 							id : "bigpicture_thumb" + i,
 							width : $(window).width(),
 
-							style : "display: inline-block;",
+							style : "display: inline-block; position: relative; top: "+scrollingTop+"px;left: 0px;",
 						});
+						
+						
 
 						$(rightwrapper).append(img2);
 						$(rightwrapper).append(img);
-
+							
 						$(img).one('load', function() {
+							
 							$("#masterwrapper").animate({
 								marginLeft : "-" + $(window).width(),
 							}, 500, function() {
@@ -489,6 +547,9 @@
 								}, 500, function() {
 
 								});
+								
+								$('#wrapper').css({height:$(window).height()+'px',
+									overflow:'hidden',});
 								current = i;
 								$(img2).css('display', 'none');
 								$(img).css('display', 'inline-block');
@@ -533,8 +594,16 @@
 							style : "position: absolute; top:" + (pos[i % cols] + 10 ) + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
 						});
 						$("#wrapper").append(m);
+						
 					}
+					
+					pos[i] =  (pos[i % cols] + 10 ) + (pos[lowest] - pos[i] - 10);
+					
 				}
+				
+				
+			
+				
 
 			}
 
