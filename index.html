@@ -174,10 +174,10 @@
 			var resize = function resize() {
 				if (Math.floor($(window).width() / 256) != cols) {
 					if ($('#rightwrapper').length == 0) {
-						console.log(cols);
 						cols = Math.floor($(window).width() / 256);
+						console.log("Resize! Columns: " + cols);
 						$('#wrapper').empty();
-						printCategory();
+						print();
 					} 
 				}
 			}
@@ -230,42 +230,34 @@
 				for (var key in msg) {
 					dict.push(msg[key]);
 				}
-				console.log(dict);
 				//printCategory();
 				
 				jQuery.each(dict, function(i, val) {
 					for(i = 0; i < val.category.length; i++) {
 					if(!map[val.category[i]]) map[val.category[i]] = new Array();
 					map[val.category[i]].push(val); 
-					
 					}
 				});
 				
-				
-				jQuery.each(map, function (i, val) {
-					console.log(val);
-					dict = val;
-					printCategory();
-				});
+				print();
 				
 			});
 			
 			
+			function print() {
+				pos = [];
+				for (var o = 0; o < cols; o++) {
+					pos[o] = 20;
+				}
+				
+				jQuery.each(map, function (i, val) {
+					printCategory(val[0].category,"","", val);
+				});
+			}
+			
 			
 
-			// var jqxhr1 = $.ajax("api.php?rpc=categories").always(function(msg) {
-			//
-			// for (var key in msg) {
-			// categories.push(msg[key]);
-			// }
-			//
-			//
-			//
-			// });
-			
-			
-
-			function printCategory(catName, backgroundColor, fontColor) {
+			function printCategory(catName, backgroundColor, fontColor, data) {
 				var current = 0;
 				//start tile
 				
@@ -290,16 +282,16 @@
 
 				m.append(k);
 
-				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>SCHILLE CATEGORY</h2><p style='color: #CCC'>SUBTITLE </p>")
+				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>"+catName+"</h2><p style='color: #CCC'>SUBTITLE </p>")
 				k.append(n);
 
 				$("#wrapper").append(m);
 				pos[0] = pos[0] + 160 + 10;
 
 				var next = 0;
-				jQuery.each(dict, function(i, val) {
+				jQuery.each(data, function(i, val) {
 
-					//for (var i = 0; i < dict.length; i++) {
+					//for (var i = 0; i < data.length; i++) {
 
 					var m = $(document.createElement('div'));
 					m.attr({
@@ -321,18 +313,15 @@
 					var scrollingTop = $(document).scrollTop();
 
 					m.click(function move() {
-						rightwrapper.append(back_button);
-						if (i != dict.length - 1)
-							rightwrapper.append(next_button);
-						if (i != 0)
-							rightwrapper.append(prev_button);
-							
-						scrollingTop = $(document).scrollTop();
 						
+						scrollingTop = $(document).scrollTop();
 						var img_n1;	
 						var img_n2;
 						
-						next_button.click(function() {
+						rightwrapper.append(back_button);
+						if (i != data.length - 1) {
+							rightwrapper.append(next_button);
+							next_button.click(function() {
 							
 							if (current == 0) {
 								rightwrapper.append(prev_button);
@@ -343,15 +332,16 @@
 							
 							
 
-							if (current == dict.length - 2)
+							if (current == data.length - 2)
 								next_button.fadeOut("slow", function () {
 									next_button.css('display', 'none');
 								});
 								
 							
 							img_n1 = $(document.createElement('img'));
+							console.log(data);
 							img_n1.attr({
-								src : dict[current + 1].path,
+								src : data[current + 1].path,
 								class : "bild",
 								id : "bigpicture" + (current + 1),
 
@@ -360,7 +350,7 @@
 
 							img_n2 = $(document.createElement('img'));
 							img_n2.attr({
-								src : dict[current + 1].path_thumb,
+								src : data[current + 1].path_thumb,
 								class : "bild",
 								id : "bigpicture_thumb" + (current + 1),
 
@@ -390,10 +380,13 @@
 							});
 
 						});
-
+							
+						}
+						if (i != 0) {
+							rightwrapper.append(prev_button);
 						prev_button.click(function() {
 							
-							if (current == dict.length - 1) {
+							if (current == data.length - 1) {
 								rightwrapper.append(next_button);
 								next_button.css('display', 'block');
 							}
@@ -410,7 +403,7 @@
 
 							img_n1 = $(document.createElement('img'));
 							img_n1.attr({
-								src : dict[current - 1].path,
+								src : data[current - 1].path,
 								class : "bild",
 								id : "bigpicture" + (current - 1),
 
@@ -419,7 +412,7 @@
 
 							img_n2 = $(document.createElement('img'));
 							img_n2.attr({
-								src : dict[current - 1].path_thumb,
+								src : data[current - 1].path_thumb,
 								class : "bild",
 								id : "bigpicture_thumb" + (current - 1),
 								style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: "+scrollingTop+"px; position: absolute;",
@@ -447,6 +440,8 @@
 							});
 
 						});
+						
+						}
 
 						$(back_button).click(function() {
 							$(back_button).add(prev_button).add(next_button).fadeOut(200, function () {
@@ -561,7 +556,7 @@
 
 					});
 
-					pos[next % cols] = pos[next % cols] + dict[i].height + 10;
+					pos[next % cols] = pos[next % cols] + data[i].height + 10;
 
 					m.append(k);
 
@@ -570,9 +565,9 @@
 
 					var img_thumb = $(document.createElement('img'));
 					img_thumb.attr({
-						src : dict[i].path_thumb,
-						height : dict[i].height,
-						width : dict[i].width,
+						src : data[i].path_thumb,
+						height : data[i].height,
+						width : data[i].width,
 						class : "bild",
 						style : "display: inline",
 					});
