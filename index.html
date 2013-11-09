@@ -146,22 +146,23 @@
 		</div>
 		<script>
 			/* Settings to be set here */
-			var maxCol = 7;
-			//Maximal columns on a oage.
-
-			var dict = [];
-			var cols = Math.floor($(window).width() / 256);
+			var maxCol = 7; //Maximal columns on a page.
+			var pos = []; 	//The position array. Sets next starting position for any column in the gallery.
+			var dict = [];	//Will contain our data.
+			var cols = Math.floor($(window).width() /256);
+			 //How many cols fit in the screen?
 			var map = {};
 			/*Don't use more than maxCol cols */
 			cols = (cols > maxCol && maxCol) || cols;
 			//If col is bigger than maxCol use maxCol else cols.
-
+			var startAt = 20; //Where to start any column
 			/* Create all needed divs. This is the most effecient way is jQuery. */
 			var rightwrapper = $(document.createElement('div')).attr({
 				id : 'rightwrapper',
 			});
+			
+			/*Button elements and css containers*/
 			var back_button = $(document.createElement('div'));
-
 			var next_button = $(document.createElement('div'));
 			var next_arrow = $(document.createElement('div'));
 			var prev_button = $(document.createElement('div'));
@@ -170,22 +171,20 @@
 			var left_line = $(document.createElement('div'));
 			var right_line = $(document.createElement('div'));
 
-			var height;
-
 			/* If window was resized, repaint the gallery preview.*/
 			var resize = function resize() {
 				if (Math.floor($(window).width() / 256) != cols) {
 					if ($('#rightwrapper').length == 0) {
 						cols = Math.floor($(window).width() / 256);
-						console.log("Resize! Columns: " + cols);
 						$('#wrapper').empty();
 						print();
 					}
 				}
 			}
-
+			/*On resize, reorder the gallery*/
 			$(window).resize(resize);
 
+			/*Wrapper on the right, "out" of the screen*/
 			rightwrapper.css('width', '50%');
 			rightwrapper.css('float', 'right');
 			rightwrapper.css('text-align', 'center');
@@ -204,36 +203,35 @@
 				id : 'next',
 				style : "top: 50px; right: 220px; background-image: url(img/prev_1.png); position: fixed; background-position: 45% 50%; z-index: 10000;",
 			});
-
+			
+			/*Build nice cross with css and put it into container back_button*/
 			back_button.append(left_line);
 			back_button.append(right_line);
-
 			left_line.attr({
 				style : 'border-top: 3px solid #FFF; opacity: 1; margin-top: 20px; height: 30px; width: 30px;',
 				class : 'line',
 				id : 'line',
 			});
-
 			right_line.attr({
 				style : 'border-top: 3px solid #FFF; opacity: 1; margin-top: -54px; height: 30px; width: 30px;',
 				class : 'line2',
 				id : 'line2',
 
 			});
-
-			var pos = []
-
+			
+			//Set first starting position for all columns.
 			for (var o = 0; o < cols; o++) {
-				pos[o] = 20;
+				pos[o] = startAt;
 			}
 
-			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
 
+			//API call to get all data needed to display the gallery.
+			var getData = $.ajax("api.php?rpc=picdir").always(function(msg) {
+				//Put every element into the data list.
 				for (var key in msg) {
 					dict.push(msg[key]);
 				}
-				//printCategory();
-
+				//Build map  category -> [pictures]
 				jQuery.each(dict, function(i, val) {
 					for ( i = 0; i < val.category.length; i++) {
 						if (!map[val.category[i]])
@@ -241,30 +239,30 @@
 						map[val.category[i]].push(val);
 					}
 				});
-
 				print();
 
 			});
 
 			function print() {
+				//If gallery is reprinted reset the starting position.
 				pos = [];
 				for (var o = 0; o < cols; o++) {
-					pos[o] = 20;
+					pos[o] = startAt;
 				}
-
 				jQuery.each(map, function(i, val) {
 					printCategory(val[0].category, "", "", val);
 				});
 			}
 
+			//Build and display all elements for the previewer / gallery.
 			function printCategory(catName, backgroundColor, fontColor, data) {
 				var current = 0;
-				//start tile
-
+				//Starting tile here, to display category name.
 				for (var o = 0; o < cols; o++) {
 					pos[o] = pos[o] + 20;
 				}
 
+				//Build tile elements and overlay
 				var m = $(document.createElement('div'));
 				m.attr({
 					class : "image",
@@ -285,13 +283,13 @@
 				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>" + catName + "</h2><p style='color: #CCC'>SUBTITLE </p>")
 				k.append(n);
 
+				//Put it into wrapper and add height to column.
 				$("#wrapper").append(m);
 				pos[0] = pos[0] + 160 + 10;
 
+				//Iterate through data and print all thumbs with overlay and events.
 				var next = 0;
 				jQuery.each(data, function(i, val) {
-
-					//for (var i = 0; i < data.length; i++) {
 
 					var m = $(document.createElement('div'));
 					m.attr({
@@ -311,12 +309,13 @@
 					});
 
 					var scrollingTop = $(document).scrollTop();
-
 					m.click(function move() {
-
 						scrollingTop = $(document).scrollTop();
 						var img_n1;
 						var img_n2;
+						function pictures () {
+							
+						}
 
 						rightwrapper.append(back_button);
 						if (i != data.length - 1) {
@@ -336,7 +335,6 @@
 									});
 
 								img_n1 = $(document.createElement('img'));
-								console.log(data);
 								img_n1.attr({
 									src : data[current + 1].path,
 									class : "bild",
@@ -364,7 +362,6 @@
 
 										$(img_n2).css('display', 'none');
 										$(img_n1).css('display', 'inline-block');
-										console.log("removing #bigpicture" + (current) + "");
 										$("#bigpicture" + (current - 1) + "").remove();
 										$("#bigpicture_thumb" + (current - 1) + "").remove();
 									});
@@ -423,7 +420,6 @@
 
 										$(img_n2).css('display', 'none');
 										$(img_n1).css('display', 'inline-block');
-										console.log("removing #bigpicture" + (current) + "");
 										$("#bigpicture" + (current + 1) + "").remove();
 										$("#bigpicture_thumb" + (current + 1) + "").remove();
 									});
@@ -599,7 +595,6 @@
 						ele = temp;
 					}
 				}
-				console.log("next row is:" + ele);
 				return ele;
 			}
 
@@ -611,7 +606,6 @@
 
 					}
 				}
-				console.log("lowest is:" + ele);
 				return ele;
 			}
 
