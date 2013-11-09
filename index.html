@@ -22,6 +22,9 @@
 				padding: 0px;
 				border: 0px;
 			}
+			
+			::-webkit-scrollbar { width: 0 !important }
+		
 
 			.image {
 				margin: 10px;
@@ -142,17 +145,17 @@
 
 		</div>
 		<script>
-		
-		/* Settings to be set here */
-		var maxCol = 7;		//Maximal columns on a oage.
-		
+			/* Settings to be set here */
+			var maxCol = 7;
+			//Maximal columns on a oage.
+
 			var dict = [];
 			var cols = Math.floor($(window).width() / 256);
 			var map = {};
-				/*Don't use more than maxCol cols */
-				cols = (cols > maxCol && maxCol) || cols;	//If col is bigger than maxCol use maxCol else cols.
-			
-			
+			/*Don't use more than maxCol cols */
+			cols = (cols > maxCol && maxCol) || cols;
+			//If col is bigger than maxCol use maxCol else cols.
+
 			/* Create all needed divs. This is the most effecient way is jQuery. */
 			var rightwrapper = $(document.createElement('div')).attr({
 				id : 'rightwrapper',
@@ -166,10 +169,9 @@
 
 			var left_line = $(document.createElement('div'));
 			var right_line = $(document.createElement('div'));
-			
+
 			var height;
-			
-			
+
 			/* If window was resized, repaint the gallery preview.*/
 			var resize = function resize() {
 				if (Math.floor($(window).width() / 256) != cols) {
@@ -178,7 +180,7 @@
 						console.log("Resize! Columns: " + cols);
 						$('#wrapper').empty();
 						print();
-					} 
+					}
 				}
 			}
 
@@ -218,11 +220,11 @@
 				id : 'line2',
 
 			});
-			
+
 			var pos = []
-			
+
 			for (var o = 0; o < cols; o++) {
-					pos[o] = 20;
+				pos[o] = 20;
 			}
 
 			var jqxhr = $.ajax("api.php?rpc=picdir").always(function(msg) {
@@ -231,40 +233,38 @@
 					dict.push(msg[key]);
 				}
 				//printCategory();
-				
+
 				jQuery.each(dict, function(i, val) {
-					for(i = 0; i < val.category.length; i++) {
-					if(!map[val.category[i]]) map[val.category[i]] = new Array();
-					map[val.category[i]].push(val); 
+					for ( i = 0; i < val.category.length; i++) {
+						if (!map[val.category[i]])
+							map[val.category[i]] = new Array();
+						map[val.category[i]].push(val);
 					}
 				});
-				
+
 				print();
-				
+
 			});
-			
-			
+
 			function print() {
 				pos = [];
 				for (var o = 0; o < cols; o++) {
 					pos[o] = 20;
 				}
-				
-				jQuery.each(map, function (i, val) {
-					printCategory(val[0].category,"","", val);
+
+				jQuery.each(map, function(i, val) {
+					printCategory(val[0].category, "", "", val);
 				});
 			}
-			
-			
 
 			function printCategory(catName, backgroundColor, fontColor, data) {
 				var current = 0;
 				//start tile
-				
+
 				for (var o = 0; o < cols; o++) {
-					pos[o] = pos[o]+20;
+					pos[o] = pos[o] + 20;
 				}
-				
+
 				var m = $(document.createElement('div'));
 				m.attr({
 					class : "image",
@@ -282,7 +282,7 @@
 
 				m.append(k);
 
-				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>"+catName+"</h2><p style='color: #CCC'>SUBTITLE </p>")
+				n.html("<h2 style='border: 1px solid #CCC; padding: 8px; color: #CCC; font-size: 14px; line-height: 18px;'>" + catName + "</h2><p style='color: #CCC'>SUBTITLE </p>")
 				k.append(n);
 
 				$("#wrapper").append(m);
@@ -309,154 +309,154 @@
 					n.attr({
 						style : "font-family: Arial, Helvetica, sans-serif;color: #555;  position: relative;  top: 25%; font-size: 14px; line-height: 18px; color: black; padding: 5px; text-align: center; display: inline-block;",
 					});
-					
+
 					var scrollingTop = $(document).scrollTop();
 
 					m.click(function move() {
-						
+
 						scrollingTop = $(document).scrollTop();
-						var img_n1;	
+						var img_n1;
 						var img_n2;
-						
+
 						rightwrapper.append(back_button);
 						if (i != data.length - 1) {
 							rightwrapper.append(next_button);
 							next_button.click(function() {
-							
-							if (current == 0) {
-								rightwrapper.append(prev_button);
-								prev_button.fadeIn("slow", function () {
-									prev_button.css('display', 'block');
-								});
-							}
-							
-							
 
-							if (current == data.length - 2)
-								next_button.fadeOut("slow", function () {
-									next_button.css('display', 'none');
-								});
-								
-							
-							img_n1 = $(document.createElement('img'));
-							console.log(data);
-							img_n1.attr({
-								src : data[current + 1].path,
-								class : "bild",
-								id : "bigpicture" + (current + 1),
+								if (current == 0) {
+									rightwrapper.append(prev_button);
+									prev_button.fadeIn("slow", function() {
+										prev_button.css('display', 'block');
+									});
+								}
 
-								style : "width: 100%; height: auto; display: none; left: 0px; top: "+scrollingTop+"px; position: absolute;",
+								if (current == data.length - 2)
+									next_button.fadeOut("slow", function() {
+										next_button.css('display', 'none');
+									});
+
+								img_n1 = $(document.createElement('img'));
+								console.log(data);
+								img_n1.attr({
+									src : data[current + 1].path,
+									class : "bild",
+									id : "bigpicture" + (current + 1),
+
+									style : "width: 100%; height: auto; display: none; left: 0px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								img_n2 = $(document.createElement('img'));
+								img_n2.attr({
+									src : data[current + 1].path_thumb,
+									class : "bild",
+									id : "bigpicture_thumb" + (current + 1),
+
+									style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								$(rightwrapper).append(img_n2);
+								$(rightwrapper).append(img_n1);
+
+								$(img_n1).one('load', function() {
+									$(img_n2).animate({
+										left : "0px",
+									}, 500, function() {
+
+										$(img_n2).css('display', 'none');
+										$(img_n1).css('display', 'inline-block');
+										console.log("removing #bigpicture" + (current) + "");
+										$("#bigpicture" + (current - 1) + "").remove();
+										$("#bigpicture_thumb" + (current - 1) + "").remove();
+									});
+									current++;
+
+								}).each(function() {
+									if (this.complete)
+										$(this).load();
+								});
+
 							});
 
-							img_n2 = $(document.createElement('img'));
-							img_n2.attr({
-								src : data[current + 1].path_thumb,
-								class : "bild",
-								id : "bigpicture_thumb" + (current + 1),
-
-								style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: "+scrollingTop+"px; position: absolute;",
-							});
-
-							$(rightwrapper).append(img_n2);
-							$(rightwrapper).append(img_n1);
-							
-
-							$(img_n1).one('load', function() {
-								$(img_n2).animate({
-									left : "0px",
-								}, 500, function() {
-									
-									$(img_n2).css('display', 'none');
-									$(img_n1).css('display', 'inline-block');
-									console.log("removing #bigpicture" + (current) + "");
-									$("#bigpicture" + (current - 1) + "").remove();
-									$("#bigpicture_thumb" + (current - 1) + "").remove();
-								});
-								current++;
-
-							}).each(function() {
-								if (this.complete)
-									$(this).load();
-							});
-
-						});
-							
 						}
 						if (i != 0) {
 							rightwrapper.append(prev_button);
-						prev_button.click(function() {
-							
-							if (current == data.length - 1) {
-								rightwrapper.append(next_button);
-								next_button.css('display', 'block');
-							}
-							if (current == 1)
-								prev_button.fadeOut("slow", function () {
-									prev_button.css('display', 'none');
-								});
-								
-							if (current == 0)
-								prev_button.fadeOut("slow", function () {
-									prev_button.css('display', 'none');
-								});
-								
+							prev_button.click(function() {
 
-							img_n1 = $(document.createElement('img'));
-							img_n1.attr({
-								src : data[current - 1].path,
-								class : "bild",
-								id : "bigpicture" + (current - 1),
+								if (current == data.length - 1) {
+									rightwrapper.append(next_button);
+									next_button.css('display', 'block');
+								}
+								if (current == 1)
+									prev_button.fadeOut("slow", function() {
+										prev_button.css('display', 'none');
+									});
 
-								style : "width: 100%; height: auto; display: none; left: 0px; top: "+scrollingTop+"px; position: absolute;",
+								if (current == 0)
+									prev_button.fadeOut("slow", function() {
+										prev_button.css('display', 'none');
+									});
+
+								img_n1 = $(document.createElement('img'));
+								img_n1.attr({
+									src : data[current - 1].path,
+									class : "bild",
+									id : "bigpicture" + (current - 1),
+
+									style : "width: 100%; height: auto; display: none; left: 0px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								img_n2 = $(document.createElement('img'));
+								img_n2.attr({
+									src : data[current - 1].path_thumb,
+									class : "bild",
+									id : "bigpicture_thumb" + (current - 1),
+									style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								$(rightwrapper).append(img_n2);
+								$(rightwrapper).append(img_n1);
+
+								$(img_n1).one('load', function() {
+									$(img_n2).animate({
+										right : "0px",
+									}, 500, function() {
+
+										$(img_n2).css('display', 'none');
+										$(img_n1).css('display', 'inline-block');
+										console.log("removing #bigpicture" + (current) + "");
+										$("#bigpicture" + (current + 1) + "").remove();
+										$("#bigpicture_thumb" + (current + 1) + "").remove();
+									});
+									current--;
+
+								}).each(function() {
+									if (this.complete)
+										$(this).load();
+								});
+
 							});
 
-							img_n2 = $(document.createElement('img'));
-							img_n2.attr({
-								src : data[current - 1].path_thumb,
-								class : "bild",
-								id : "bigpicture_thumb" + (current - 1),
-								style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: "+scrollingTop+"px; position: absolute;",
-							});
-
-							$(rightwrapper).append(img_n2);
-							$(rightwrapper).append(img_n1);
-
-							$(img_n1).one('load', function() {
-								$(img_n2).animate({
-									right : "0px",
-								}, 500, function() {
-
-									$(img_n2).css('display', 'none');
-									$(img_n1).css('display', 'inline-block');
-									console.log("removing #bigpicture" + (current) + "");
-									$("#bigpicture" + (current + 1) + "").remove();
-									$("#bigpicture_thumb" + (current + 1) + "").remove();
-								});
-								current--;
-
-							}).each(function() {
-								if (this.complete)
-									$(this).load();
-							});
-
-						});
-						
 						}
 
 						$(back_button).click(function() {
-							$(back_button).add(prev_button).add(next_button).fadeOut(200, function () {
-								
+							$(back_button).add(prev_button).add(next_button).fadeOut(200, function() {
+
 								$(this).css('display', 'none');
 							});
-							$('#wrapper').css({height:'auto',
-							overflow:'',});
-							
-							if(img_n1 && img_n2) {
-								img_n1.css({'position': 'relative'});
-								img_n2.css({'position': 'relaitve'});
+							$('#wrapper').css({
+								height : 'auto',
+								overflow : '',
+							});
+
+							if (img_n1 && img_n2) {
+								img_n1.css({
+									'position' : 'relative'
+								});
+								img_n2.css({
+									'position' : 'relaitve'
+								});
 							}
 
-							
 							$("#masterwrapper").animate({
 								marginLeft : "0px",
 							}, 500, function() {
@@ -465,7 +465,6 @@
 								$(rightwrapper).remove();
 								$(rightwrapper).empty();
 								resize();
-								
 
 							});
 
@@ -492,16 +491,12 @@
 						$('#masterwrapper').css('width', '200%');
 						$('#wrapper_out').css('width', '50%');
 						$('#masterwrapper').append(rightwrapper);
-						
-						
 
 						rightwrapper.mousemove(function(event) {
 							var position = (event.clientY / $(window).height()) * $(document).height() - 220;
-							
-							$(document).scrollTop( (scrollingTop > position && scrollingTop) || position);
+
+							$(document).scrollTop((scrollingTop > position && scrollingTop) || position);
 						});
-						
-						
 
 						var img = $(document.createElement('img'));
 						img.attr({
@@ -509,9 +504,8 @@
 							class : "bild_n",
 							id : "bigpicture" + i,
 							width : $(window).width(),
-							style : "display: none; position: relative; top: "+scrollingTop+"px;left: 0px;",
+							style : "display: none; position: relative; top: " + scrollingTop + "px;left: 0px;",
 						});
-						
 
 						var img2 = $(document.createElement('img'));
 						img2.attr({
@@ -520,16 +514,14 @@
 							id : "bigpicture_thumb" + i,
 							width : $(window).width(),
 
-							style : "display: inline-block; position: relative; top: "+scrollingTop+"px;left: 0px;",
+							style : "display: inline-block; position: relative; top: " + scrollingTop + "px;left: 0px;",
 						});
-						
-						
 
 						$(rightwrapper).append(img2);
 						$(rightwrapper).append(img);
-							
+
 						$(img).one('load', function() {
-							
+
 							$("#masterwrapper").animate({
 								marginLeft : "-" + $(window).width(),
 							}, 500, function() {
@@ -542,9 +534,11 @@
 								}, 500, function() {
 
 								});
-								
-								$('#wrapper').css({height:$(window).height()+'px',
-									overflow:'hidden',});
+
+								$('#wrapper').css({
+									height : $(window).height() + 'px',
+									overflow : 'hidden',
+								});
 								current = i;
 								$(img2).css('display', 'none');
 								$(img).css('display', 'inline-block');
@@ -589,16 +583,12 @@
 							style : "position: absolute; top:" + (pos[i % cols] + 10 ) + "px;left:50%; margin-left:" + (-(124 * cols) + (i % cols) * 250) + "px; background-color: #555; width: 240px; height: " + (pos[lowest] - pos[i] - 10) + "px;",
 						});
 						$("#wrapper").append(m);
-						
+
 					}
-					
-					pos[i] =  (pos[i % cols] + 10 ) + (pos[lowest] - pos[i] - 10);
-					
+
+					pos[i] = (pos[i % cols] + 10 ) + (pos[lowest] - pos[i] - 10);
+
 				}
-				
-				
-			
-				
 
 			}
 
