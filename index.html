@@ -327,6 +327,62 @@
 									prev_button.fadeIn("slow", function() {
 										prev_button.css('display', 'block');
 									});
+									
+									prev_button.click(function() {
+
+								if (current == data.length - 1) {
+									rightwrapper.append(next_button);
+									next_button.css('display', 'block');
+								}
+								if (current == 1)
+									prev_button.fadeOut("slow", function() {
+										prev_button.css('display', 'none');
+									});
+
+								if (current == 0)
+									prev_button.fadeOut("slow", function() {
+										prev_button.css('display', 'none');
+									});
+
+								img_n1 = $(document.createElement('img'));
+								img_n1.attr({
+									src : data[current - 1].path,
+									class : "bild",
+									id : "bigpicture" + (current - 1),
+
+									style : "width: 100%; height: auto; display: none; left: 0px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								img_n2 = $(document.createElement('img'));
+								img_n2.attr({
+									src : data[current - 1].path_thumb,
+									class : "bild",
+									id : "bigpicture_thumb" + (current - 1),
+									style : "width: 100%; height: auto; display: inline-block; right: " + $(window).width() + "px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								$(rightwrapper).append(img_n2);
+								$(rightwrapper).append(img_n1);
+
+								$(img_n1).one('load', function() {
+									$(img_n2).animate({
+										right : "0px",
+									}, 500, function() {
+
+										$(img_n2).css('display', 'none');
+										$(img_n1).css('display', 'inline-block');
+										$("#bigpicture" + (current + 1) + "").remove();
+										$("#bigpicture_thumb" + (current + 1) + "").remove();
+									});
+									current--;
+
+								}).each(function() {
+									if (this.complete)
+										$(this).load();
+								});
+
+							});
+									
 								}
 
 								if (current == data.length - 2)
@@ -382,6 +438,62 @@
 								if (current == data.length - 1) {
 									rightwrapper.append(next_button);
 									next_button.css('display', 'block');
+									
+									next_button.click(function() {
+
+								if (current == 0) {
+									rightwrapper.append(prev_button);
+									prev_button.fadeIn("slow", function() {
+										prev_button.css('display', 'block');
+									});
+								}
+
+								if (current == data.length - 2)
+									next_button.fadeOut("slow", function() {
+										next_button.css('display', 'none');
+									});
+
+								img_n1 = $(document.createElement('img'));
+								img_n1.attr({
+									src : data[current + 1].path,
+									class : "bild",
+									id : "bigpicture" + (current + 1),
+
+									style : "width: 100%; height: auto; display: none; left: 0px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								img_n2 = $(document.createElement('img'));
+								img_n2.attr({
+									src : data[current + 1].path_thumb,
+									class : "bild",
+									id : "bigpicture_thumb" + (current + 1),
+
+									style : "width: 100%; height: auto; display: inline-block; left: " + $(window).width() + "px; top: " + scrollingTop + "px; position: absolute;",
+								});
+
+								$(rightwrapper).append(img_n2);
+								$(rightwrapper).append(img_n1);
+
+								$(img_n1).one('load', function() {
+									$(img_n2).animate({
+										left : "0px",
+									}, 500, function() {
+
+										$(img_n2).css('display', 'none');
+										$(img_n1).css('display', 'inline-block');
+										$("#bigpicture" + (current - 1) + "").remove();
+										$("#bigpicture_thumb" + (current - 1) + "").remove();
+									});
+									current++;
+
+								}).each(function() {
+									if (this.complete)
+										$(this).load();
+								});
+
+							});
+									
+									
 								}
 								if (current == 1)
 									prev_button.fadeOut("slow", function() {
