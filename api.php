@@ -21,13 +21,28 @@ function api_get() {
 		if ($handle = opendir('etc')) {
 			while (false !== ($file = readdir($handle))) {
 				if (strpos($file, '.json') !== false && strpos($file, '.json~') == false) {
+					if($file == 'categories.json'){
+						continue;
+					}
 					$result[$file] = (string)file_get_contents('etc/' . $file);
 				}
 			}
 			to_json($result);
 			closedir($handle);
 		}
-	} else {
+	} 
+	if (isset($_GET['rpc']) && $_GET['rpc'] == 'catdir') {
+		if (file_exists('etc/categories.json')){
+			echo (string)file_get_contents('etc/categories.json');
+		}else{
+			$fp = fopen('etc/categories.json','wb');
+			fwrite($fp,'{}');
+			fclose($fp);
+			echo (string)file_get_contents('etc/categories.json');
+		}
+		
+	}
+	else {
 
 	}
 }
@@ -35,8 +50,17 @@ function api_get() {
 function api_post() {
 	is_auth();
 	check_dir();
-	write_file();
+	if(isset($_POST['rpc']) && $_POST['rpc'] == 'addimg'){
+		write_file();
+	}
+	if(isset($_POST['rpc']) && ($_POST['rpc'] == 'setcat' && $_POST['cat'])){
+			$fp = fopen('etc/categories.json','wb');
+			fwrite($fp,(string)$_POST['cat']);
+			fclose($fp);
+	}
+	
 }
+	
 
 
 function to_json($my_result) {
